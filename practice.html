@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="config.js"></script>
+</head>
+
+<body>
+    <div id="imports">&nbsp;</div>
+
+    <script type="text/javascript">
+        $(function(){
+            $("#imports").load("imports.html");
+        });
+    </script>
+
+    <!-- Rest of body goes here -->
+    <div class="container">
+        <div class="row my-2 py-2" style="border-bottom: 1px solid black">
+            <div class="col-12 py-3">
+                <h1>Gemengde Oefening</h1>
+            </div>
+            <div class="col-12 col-lg-8">
+                <p class="pt-2">
+                    Van alles wat, willekeurig samengesteld! Wil je een bepaald soort vraag oefenen?
+                    Ga dan naar <a href="./exerciseCreator.html">opgave samenstellen</a>.
+                </p>
+                <p>
+                    Als je geen code invoert krijg je 1 keer per minuut
+                    nieuwe vragen. Onderaan kun je uitwerkingen zichtbaar maken. 
+                    Tot slot krijgt iedere pagina krijgt ook een unieke code. Deze code kun je later opnieuw 
+                    invoeren om exact dezelfde vragen terug te krijgen.
+                </p>
+            </div>
+            <div class="col-12 col-lg-4 py-2">
+                <div class="row">
+                    <div class="col-12 d-grid">
+                        <button class="btn btn-secondary btn-block" onclick="getRandomExercise()">Nieuwe vragen</button>
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col-12 d-grid">
+                        <label for="seedInput" class="form-label">Paginacode</label>
+                        <input type="text" class="form-control" id="seedInput">
+                        <button class="btn btn-secondary btn-block my-2" onclick="getRandomExercise($('#seedInput').val())">Code gebruiken</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 py-4">
+                <div id="exercisePlaceholder"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <a class="btn btn-success" data-bs-toggle="collapse" href="#collapsedAnswers" role="button">Uitwerkingen</a>
+                <div class="collapse" id="collapsedAnswers">
+                    <div class="card card-body my-2" id="answersPlaceholder"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4" style="border-top: 1px solid black">
+            <div class="col-md-4 d-flex align-items-center">
+                <span class="mb-3 mb-md-0 text-body-secondary">© 2023 Molrekenaar / J. van den Berg</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Other JS goes here -->
+    <script type="text/javascript" src="./exerciseTools.js"></script>
+    <script>
+        getRandomExercise();
+    </script>
+</body>
+
+</html>
