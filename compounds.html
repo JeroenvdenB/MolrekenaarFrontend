@@ -25,13 +25,49 @@
         </div>
         <div class="row">
             <div class="col py-3">
-                <button class="btn btn-primary" onclick="addCompoundModal()">Stof Toevoegen</button>
+                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#compoundModal">Stof Toevoegen</button>
                 <button class="btn btn-primary" onclick="showCompounds()">Opnieuw Laden</button>
                 <button class="btn btn-secondary" disabled>Hoe voeg ik formules toe?</button>
             </div>
         </div>
         <div class="row">
             <div id="allCompoundsTable"></div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="compoundModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title fs-5" id="exampleModalLabel">Stof toevoegen</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <label for="name" class="form-label">Naam</label>
+                        <input type="text" class="form-control" id="compoundName">
+                        <label for="formula" class="form-label">Formule (HTML notatie)</label>
+                        <input type="text" class="form-control" id="formula">
+                        <label for="composition" class="form-label">Compositie</label>
+                        <input type="text" class="form-control" id="composition">
+                        <label for="molarMass" class="form-label" id="molarMass">Molmassa (g/mol)</label>
+                        <input type="text" class="form-control" id="molarMass">
+                        <label for="density" class="form-label">Dichtheid (kg/m3)</label>
+                        <input type="text" class="form-control" id="density">
+                        <label for="phase" class="form-label">Fase (bij 295 K)</label>
+                        <select class="form-select" id="phase">
+                            <option selected>g</option>
+                            <option>l</option>
+                            <option>s</option>
+                        </select>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuleren</button>
+                    <button type="button" class="btn btn-primary" id="submitButton" onclick="addCompound()">Toevoegen</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -47,6 +83,10 @@
     <!-- Other JS goes here -->
     <script>
         showCompounds();
+
+        function addCompound() {
+            console.log($("#compoundName").val());
+        }
 
         async function showCompounds() {
             var allCompounds = await fetch(url + "allCompounds", {
