@@ -27,7 +27,22 @@
             <div class="col py-3">
                 <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#compoundModal">Stof Toevoegen</button>
                 <button class="btn btn-primary" onclick="showCompounds()">Opnieuw Laden</button>
-                <button class="btn btn-secondary" disabled>Hoe voeg ik formules toe?</button>
+                <a class="btn btn-secondary" data-bs-toggle="collapse" href="#formulaHelp" role="button">
+                    Hoe voeg ik formules toe?
+                </a>
+                <div class="collapse" id="formulaHelp">
+                    <div class="card card-body my-2">
+                        <p>Formules moeten in HTML geschreven worden. Gelukkig is dat niet moeilijk! Haakjes en (hoofd)letters
+                        hebben geen speciale opmaak nodig. Alleen subscript heeft een speciale notatie. Gebruik dit
+                        voor coëfficiënten en ionladingen. Vergeet niet om in de compositie ionen met lading op te schrijven,
+                        aangezien dit in sommige vragen gebruikt kan worden.</p>
+
+                        <p>CH<sub>4</sub> typ je als: <span class="code-block">CH&ltsub&gt4&lt/sub&gt</span></br>
+                        Zn(OH)<sub>2</sub> typ je als: <span class="code-block">Zn(OH)&ltsub&gt&lt/sub&gt</span></br>
+                        De compositie Zn<sup>2+</sup>:1, OH<sup>-</sup>:2 typ je als: 
+                        <span class="code-block">Zn&ltsup&gt2+&lt/sup&gt:1, OH&ltsup&gt-&lt/sup&gt</span></p>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -51,7 +66,7 @@
                         <input type="text" class="form-control" id="formula">
                         <label for="composition" class="form-label">Compositie</label>
                         <input type="text" class="form-control" id="composition">
-                        <label for="molarMass" class="form-label" id="molarMass">Molmassa (g/mol)</label>
+                        <label for="molarMass" class="form-label">Molmassa (g/mol)</label>
                         <input type="text" class="form-control" id="molarMass">
                         <label for="density" class="form-label">Dichtheid (kg/m3)</label>
                         <input type="text" class="form-control" id="density">
@@ -65,7 +80,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuleren</button>
-                    <button type="button" class="btn btn-primary" id="submitButton" onclick="addCompound()">Toevoegen</button>
+                    <button type="button" class="btn btn-primary" id="submitButton" onclick="addCompound()" data-bs-dismiss="modal">Toevoegen</button>
                 </div>
             </div>
         </div>
@@ -85,7 +100,31 @@
         showCompounds();
 
         function addCompound() {
-            console.log($("#compoundName").val());
+            var compound = {};
+            compound.name = $("#compoundName").val();
+            compound.htmlFormula = $("#formula").val();
+            compound.composition = $("#composition").val();
+            compound.phase = $("#phase").val();
+            compound.molarMass = $("#molarMass").val();
+            compound.density = $("#density").val();
+
+
+            fetch(url + "addCompound", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(compound),
+            }).then(function(response) {
+                if (response.status == 200) {
+                    console.log("Compound added to DB");
+                    showCompounds();
+                } else {
+                    alert("Something went wrong in the fetch request");
+                }
+            }).catch(function(err) {
+                console.warn("Error in fetch request.", err);
+            });       
         }
 
         async function showCompounds() {
