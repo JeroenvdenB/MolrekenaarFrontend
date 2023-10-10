@@ -75,6 +75,12 @@
                             <option>l</option>
                             <option>s</option>
                         </select>
+                        <label for="compoundType" class="form-label">Soort stof</label>
+                        <select class="form-select" id="type">
+                            <option selected>moleculair</option>
+                            <option>metaal</option>
+                            <option>zout</option>
+                        </select>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -106,6 +112,7 @@
             compound.phase = $("#phase").val();
             compound.molarMass = $("#molarMass").val();
             compound.density = $("#density").val();
+            compound.type = $("#type").val();
 
 
             fetch(url + "addCompound", {
@@ -144,6 +151,8 @@
                         <th> Molmassa (g/mol) </th>
                         <th> Dichtheid (kg/m<super>3</super>) </th>
                         <th> Fase (295K) </th>
+                        <th> Soort stof </th>
+                        <th> </th> <th> </th>
                         </tr>
                     </thead>
                     <tbody>`;
@@ -156,6 +165,7 @@
                     "<td>" + allCompounds[i].molarMass + "</td>" +
                     "<td>" + allCompounds[i].density + "</td>" +
                     "<td>" + allCompounds[i].phase + "</td>" +
+                    "<td>" + allCompounds[i].type + "</td>" +
                     "<td> <button onclick=deleteCompound("+allCompounds[i].id+")> Delete </button> </td>" +
                     "<td> <button data-bs-toggle='modal' data-bs-target='#compoundModal' onclick=callUpdateModal("+allCompounds[i].id+")> Update </button> </td>" +
                     "</tr>";

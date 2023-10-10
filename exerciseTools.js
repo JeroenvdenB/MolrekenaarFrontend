@@ -2,7 +2,7 @@ function getRandomExercise(seed) {
     //Switch number to a page readout once that's a button
     //Switch type to "Random" once back-end supports that
     var number = 10;
-    var questionType = "MassMol";
+    var questionType = "Random";
     if (seed == undefined) {
         seed = Date.now();
     }
