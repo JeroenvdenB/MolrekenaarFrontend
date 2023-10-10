@@ -56,10 +56,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title fs-5" id="exampleModalLabel">Stof toevoegen</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="compoundForm">
                         <label for="name" class="form-label">Naam</label>
                         <input type="text" class="form-control" id="compoundName">
                         <label for="formula" class="form-label">Formule (HTML notatie)</label>
@@ -118,12 +117,14 @@
             }).then(function(response) {
                 if (response.status == 200) {
                     console.log("Compound added to DB");
+                    $("#compoundForm").trigger('reset');
                     showCompounds();
                 } else {
                     alert("Something went wrong in the fetch request");
                 }
             }).catch(function(err) {
                 console.warn("Error in fetch request.", err);
+                alert("Er gaat iets fout!");
             });       
         }
 
@@ -156,7 +157,7 @@
                     "<td>" + allCompounds[i].density + "</td>" +
                     "<td>" + allCompounds[i].phase + "</td>" +
                     "<td> <button onclick=deleteCompound("+allCompounds[i].id+")> Delete </button> </td>" +
-                    "<td> <button onclick=updateCompound("+allCompounds[i].id+")> Update </button> </td>" +
+                    "<td> <button data-bs-toggle='modal' data-bs-target='#compoundModal' onclick=callUpdateModal("+allCompounds[i].id+")> Update </button> </td>" +
                     "</tr>";
             }
 
@@ -164,31 +165,65 @@
             document.getElementById("allCompoundsTable").innerHTML = insertable;
         }
 
-        async function testCompound() {
+        async function callUpdateModal(id) { //passing the whole compound as an argument into this does not work
+            //change update modal footer
+            $(".modal-footer").html(`
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="dismissUpdateModal()">Annuleren</button>
+                <button type="button" class="btn btn-primary" id="submitButton" onclick="updateCompound(${id})" data-bs-dismiss="modal">Update</button>
+            `);
+ 
+            //fetch compound and fill modal with compound data
+            var compound = await fetch(url + "compoundById/" + id, {
+                method: "GET",
+            });
+            compound = await compound.json();
+            $("#compoundName").val(compound.name);
+            $("#formula").val(compound.htmlFormula);
+            $("#composition").val(compound.composition);
+            $("#phase").val(compound.phase);
+            $("#molarMass").val(compound.molarMass);
+            $("#density").val(compound.density);
+        }
+
+        function updateCompound(id) {
             var compound = {};
-            compound.name = "methaan";
-            compound.htmlFormula = "CH<sub>4</sub>";
-            compound.composition = "C:1, H:4"
-            compound.molarMass = 16.04;
-            compound.density = 0.657; // kg/m3
-            compound.phase = "g";
+            compound.id = id;
+            compound.name = $("#compoundName").val();
+            compound.htmlFormula = $("#formula").val();
+            compound.composition = $("#composition").val();
+            compound.phase = $("#phase").val();
+            compound.molarMass = $("#molarMass").val();
+            compound.density = $("#density").val();
 
-            console.log(compound);
 
-            var response = await fetch(url + "addCompound", {
-                method: "POST",
+            fetch(url + "updateCompound", {
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(compound),
-            });
+            }).then(function(response) {
+                if (response.status == 200) {
+                    console.log("Compound added to DB");
+                    $("#compoundForm").trigger('reset');
+                    showCompounds();
+                } else {
+                    alert("Something went wrong in the fetch request");
+                }
+            }).catch(function(err) {
+                console.warn("Error in fetch request.", err);
+                alert("Er gaat iets fout!");
+            });       
 
-            var result = await response;
-            if (result.status == 200) {
-                console.log("compound accepted, fetch completed")
-            } else {
-                console.log("problem in post request")
-            }
+            dismissUpdateModal();
+        }
+        
+        function dismissUpdateModal() {
+            $(".modal-footer").html(`
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuleren</button>
+                <button type="button" class="btn btn-primary" id="submitButton" onclick="addCompound()" data-bs-dismiss="modal">Toevoegen</button>
+            `);
+            $("#compoundForm").trigger('reset');
 
         }
 
@@ -203,7 +238,6 @@
             });
 
             showCompounds();
-
         }
 
     </script>
