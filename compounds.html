@@ -193,6 +193,7 @@
             $("#phase").val(compound.phase);
             $("#molarMass").val(compound.molarMass);
             $("#density").val(compound.density);
+            $("#type").val(compound.type);
         }
 
         function updateCompound(id) {
@@ -204,6 +205,9 @@
             compound.phase = $("#phase").val();
             compound.molarMass = $("#molarMass").val();
             compound.density = $("#density").val();
+            compound.type = $("#type").val();
+
+            console.log(compound);
 
 
             fetch(url + "updateCompound", {
