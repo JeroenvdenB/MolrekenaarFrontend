@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="config.js"></script>
+</head>
+
+<body>
+    <div id="imports">&nbsp;</div>
+
+    <script type="text/javascript">
+        $(function(){
+            $("#imports").load("imports.html");
+        });
+    </script>
+
+    <!-- Rest of body goes here -->
+    <div class="container">
+        <div class="row">
+            <h1>Toegang verifieren</h1>
+            <p>Stofbeheer is alleen beschikbaar voor bevoegden. Voer uw toegangssleutel in.</p>
+            <div class="col-12 col-lg-9">
+                <input type="text" class="form-control my-1" id="key">
+            </div>
+            <div class="col-12 col-lg-3 d-grid">
+                <button class="btn btn-primary my-1" onclick="verifyKey()">Volgende</button>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Footer -->
+    <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4" style="border-top: 1px solid black">
+            <div class="col-md-4 d-flex align-items-center">
+                <span class="mb-3 mb-md-0 text-body-secondary">© 2023 Molrekenaar / J. van den Berg</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Other JS goes here -->
+    <script>
+        function verifyKey() {
+            var key = $("#key").val();
+            console.log(key);
+
+            fetch(url + "verifyKey/" + key, {
+                method:"POST",
+            }).then(function(response) {
+                if (response.status == 200) {
+                    console.log("key was sent and recieved");
+                } else {
+                    console.log("Something went wrong");
+                }
+            }).catch(function(err) {
+                console.warn("Error!", err);
+            });
+        }
+    </script>
+</body>
+
+</html>
