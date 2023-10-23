@@ -19,8 +19,8 @@
     <!-- Rest of body goes here -->
     <div class="container">
         <div class="row">
-            <h1>Toegang verifieren</h1>
-            <p>Stofbeheer is alleen beschikbaar voor bevoegden. Voer uw toegangssleutel in.</p>
+            <h1>Toegang Geweigerd</h1>
+            <p>Stofbeheer is alleen beschikbaar voor bevoegden. Voer uw productcode in.</p>
             <div class="col-12 col-lg-9">
                 <input type="text" class="form-control my-1" id="key">
             </div>
@@ -42,21 +42,22 @@
 
     <!-- Other JS goes here -->
     <script>
-        function verifyKey() {
+        async function verifyKey() {
             var key = $("#key").val();
-            console.log(key);
 
-            fetch(url + "verifyKey/" + key, {
-                method:"POST",
-            }).then(function(response) {
-                if (response.status == 200) {
-                    console.log("key was sent and recieved");
-                } else {
-                    console.log("Something went wrong");
-                }
-            }).catch(function(err) {
-                console.warn("Error!", err);
+            var verification = await fetch(url + "verifyKey/" + key, {
+                method:"GET",
             });
+            
+            verification = await verification.json();
+
+            if (verification.email == null) {
+                alert("Productcode onbekend!")
+            } else {
+                sessionStorage.setItem("ProductKey", verification.keyString);
+                console.log("From storage: " + sessionStorage.getItem("ProductKey"));
+            }
+
         }
     </script>
 </body>
