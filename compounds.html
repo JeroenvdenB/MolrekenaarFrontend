@@ -15,6 +15,13 @@
         $(function(){
             $("#imports").load("imports.html");
         });
+
+        //Verify that a product key is present in session storage
+        if (sessionStorage.getItem("ProductKey") == null) {
+            alert("No program key detected. Returning to login.");
+            window.location = "./verification.html";
+        }
+
     </script>
 
     <!-- Rest of body goes here -->
