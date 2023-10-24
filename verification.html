@@ -45,19 +45,19 @@
         async function verifyKey() {
             var key = $("#key").val();
 
-            var verification = await fetch(url + "verifyKey/" + key, {
-                method:"GET",
+            var response = await fetch(url + "verifyKey/" + key, {
+                method: "GET",
             });
-            
-            verification = await verification.json();
 
-            if (verification.email == null) {
-                alert("Productcode onbekend!")
+            if(response.ok) {
+                var json = await response.json();
+                sessionStorage.setItem("ProductKey", json.keyString); //store for use in headers in compounds.html for authenticated endpoints
+                alert("U bent ingelogd voor: " + json.organisation);
+                window.location = "./compounds.html";
             } else {
-                sessionStorage.setItem("ProductKey", verification.keyString);
-                console.log("From storage: " + sessionStorage.getItem("ProductKey"));
+                var json = await response.json();
+                alert("HTTP-Error: " + response.status + " - " + json.message);
             }
-
         }
     </script>
 </body>

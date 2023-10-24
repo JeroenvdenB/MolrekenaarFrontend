@@ -103,6 +103,7 @@
     <!-- Other JS goes here -->
     <script>
         showCompounds();
+        alert("Let op! Wijzigingen aan stoffen worden toegepast voor ALLE gebruikers en zijn onomkeerbaar!");
 
         function addCompound() {
             var compound = {};
@@ -119,6 +120,7 @@
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "PRODUCT_KEY": sessionStorage.getItem("ProductKey"),
                 },
                 body: JSON.stringify(compound),
             }).then(function(response) {
@@ -126,12 +128,14 @@
                     console.log("Compound added to DB");
                     $("#compoundForm").trigger('reset');
                     showCompounds();
+                } else if (response.status == 401) {
+                    alert("Toevoegen mislukt. Er is geen geldige productcode gevonden. Log opnieuw in en probeer het nog eens.")
                 } else {
-                    alert("Something went wrong in the fetch request");
+                    alert("Unknown error in fetch request to /addCompound.");
                 }
             }).catch(function(err) {
                 console.warn("Error in fetch request.", err);
-                alert("Er gaat iets fout!");
+                alert("An unexpected error was caught.");
             });       
         }
 
@@ -214,6 +218,7 @@
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
+                    "PRODUCT_KEY": sessionStorage.getItem("ProductKey"),
                 },
                 body: JSON.stringify(compound),
             }).then(function(response) {
@@ -221,12 +226,14 @@
                     console.log("Compound added to DB");
                     $("#compoundForm").trigger('reset');
                     showCompounds();
+                } else if (response.status == 401) {
+                    alert("Update mislukt. Er is geen geldige productcode gevonden. Log opnieuw in en probeer het nog eens.");
                 } else {
-                    alert("Something went wrong in the fetch request");
+                    alert("Unknown error in fetch request for /updateCompound");
                 }
             }).catch(function(err) {
                 console.warn("Error in fetch request.", err);
-                alert("Er gaat iets fout!");
+                alert("Unknown error in updateCompound");
             });       
 
             dismissUpdateModal();
@@ -247,8 +254,15 @@
                 method: "DELETE",
                 headers:{
                     "Content-Type": "application/json",
+                    "PRODUCT_KEY": sessionStorage.getItem("ProductKey"),
                 },
                 body: JSON.stringify(id),
+            }).then(function(response) {
+                if (response.status == 200) {
+                    console.log("Compound deleted");
+                } else if (response.status == 401) {
+                    alert("Verwijderen mislukt. Er is geen geldige productcode gevonden. Log opnieuw in en probeer het nog eens.");
+                } 
             });
 
             showCompounds();
