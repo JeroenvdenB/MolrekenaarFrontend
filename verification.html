@@ -28,6 +28,12 @@
                 <button class="btn btn-primary my-1" onclick="verifyKey()">Volgende</button>
             </div>
         </div>
+
+        <div class="row loaderDiv" style="justify-content: center; display: none">
+            <div class="loaderCircle my-3"></div>
+            <div class="loadingText"><p style="text-align: center">Verbinding maken met server</p></div>
+        </div>
+
     </div>
     
 
@@ -43,6 +49,9 @@
     <!-- Other JS goes here -->
     <script>
         async function verifyKey() {
+            //Start load circle
+            $(".loaderDiv").toggle();
+
             var key = $("#key").val();
 
             var response = await fetch(url + "verifyKey/" + key, {
@@ -52,12 +61,17 @@
             if(response.ok) {
                 var json = await response.json();
                 sessionStorage.setItem("ProductKey", json.keyString); //store for use in headers in compounds.html for authenticated endpoints
+                
+                //Remove loading circle
+                $(".loaderDiv").toggle();
+
                 alert("U bent ingelogd voor: " + json.organisation);
                 window.location = "./compounds.html";
             } else {
                 var json = await response.json();
                 alert("HTTP-Error: " + response.status + " - " + json.message);
             }
+
         }
     </script>
 </body>

@@ -9,8 +9,15 @@ function getRandomExercise(seed) {
 }
 
 async function fetchExercise(number, seed) {
+    //Start loading circle
+    $(".loaderDiv").toggle();
+
     var response = await fetch(url + "generateRandomExercise/" + number + "/" + seed);
     var exercise = await response.json();
+
+    //Remove loading circle
+    $(".loaderDiv").toggle();
+
     displayExercise(exercise);   
 }  
 
