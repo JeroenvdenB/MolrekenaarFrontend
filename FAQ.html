@@ -169,7 +169,7 @@
                         <div id="collapseNine" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 <p>Dit beheert alle stoffen die de website kan gebruiken. De stoffen zijn opgeslagen in een database.
-                                    Momenteel bevat de database zo'n 200 willekeurige stoffen (metalen, moleculaire stoffen en zouten).
+                                    Momenteel bevat de database zo'n 70 willekeurige stoffen (metalen, moleculaire stoffen en zouten).
                                     Het is in principe niet nodig om hier veranderingen in aan te brengen. Suggesties voor toe te voegen
                                     stoffen zijn op dit moment gesloten.
                                 </p>
@@ -210,8 +210,8 @@
                         </h2>
                         <div id="collapseTwelve" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <p>Alle molmassa's komen uit T98 of zijn berekend op basis van T99 in Binas 4e editie.
-                                    Berekende molmassa's zijn afgerond op 4 significante cijfers. Alle dichtheden komen uit Binas 4e editie.
+                                <p>Alle molmassa's komen uit T98 of zijn berekend op basis van T99 in Binas 5e editie.
+                                    Berekende molmassa's zijn afgerond op 4 significante cijfers. Alle dichtheden komen uit Binas 5e editie.
                                     Als dit het probleem niet verklaart, vraag het dan aan je docent.
                                 </p>
                                 <p>
@@ -244,10 +244,10 @@
                         <div id="collapseFourteen" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 <p>Alle gegevens in de database hebben dezelfde significantie. Molmassa's hebben 4 cijfers, dichtheid 3,
-                                    Avogadro's constante 5 en molair volume 3. Sommige hoeveelheden in een vraag hebben 2 significante cijfers.
+                                    Avogadro's constante 5 en molair volume 3. Hoeveelheden in een vraag kunnen 2 of 3 significante cijfers hebben.
                                     Het getal met het laagste aantal significante cijfers bepaalt de significantie van het eindantwoord.</p>
-                                <p> Deze regel kun je overigens ook gebruiken op het eindexamen. Vaak zijn er zo veel stappen, dat de exacte regels 
-                                    niet meer uitmaken. Als je het minste aantal significante cijfers uit de gegevens toepast op het antwoord 
+                                <p> Deze regel kun je overigens ook gebruiken op het eindexamen. Vaak zijn er zo veel stappen dat de exacte regels 
+                                    niet meer uit maken. Als je het minste aantal significante cijfers uit de gegevens toepast op het antwoord 
                                     zal het 99% van de tijd goed gaan.</p>
                             </div>
                         </div>
@@ -260,13 +260,12 @@
                         </h2>
                         <div id="collapseFifteen" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <p>Dat is niet helemaal het geval. Ik raad je aan om in berekeningen NOOIT tussentijds af te 
+                                <p>Dat is niet helemaal het geval. Allereerst: ik raad je aan om in berekeningen NOOIT tussentijds af te 
                                     ronden op significantie. Doe dit aan het einde. Als je tussendoor toch af wilt ronden,
-                                    neem dan 1 of 2 cijfers meer dan dat je uiteindelijk nodig zult hebben, om afrondfouten 
-                                    te voorkomen.
+                                    neem dan 1 of 2 cijfers meer dan dat je uiteindelijk nodig zult hebben. Zo voorkom je afrondfouten.
                                 </p>
                                 <p>Op deze website worden antwoorden tussentijds afgerond opgeschreven. Meestal met extra significantie.
-                                    Ik weet niet zeker of getallen 'achter de schermen' ook afgerond gebruikt worden.
+                                    Ik weet niet zeker of getallen 'achter de schermen' ook afgerond gebruikt worden... 
                                 </p>
                                 <p>Mocht je bekend zijn met BigDecimal's in Java en advies hebben, dan hoor ik het graag.</p>
                             </div>
@@ -314,15 +313,20 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEighteen" aria-expanded="false" aria-controls="collapseTwo">
-                                <p>Hoe werkt de website? (Technische details)</p>
+                                <p>Hoe werkt de website?</p>
                             </button>
                         </h2>
                         <div id="collapseEighteen" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <p>De site draait op een hosting-platform. De stoffen staan opgeslagen in een Azure database.
+                                <p> De site draait op een hosting-platform. De stoffen staan opgeslagen in een Azure database.
                                     De opdrachten worden opgevraagd bij een RESTful API. Dit gebruikt een Java backend en is deployed op Azure met 
                                     toegant tot de stoffendatabase. Alle hoeveelheden zijn willekeurig gegenereerd binnen bepaalde grenzen. Wat die grens is,
                                     hangt af van het soort vraag.
+                                </p>
+                                <p>
+                                    De eerste stap is 10 willekeurige stoffen uit de database halen. Daarna worden vragen gegenereerd die bij de stoffen 
+                                    passen. De 'code' op de pagina is een seed voor de random generators. Als er geen code is opgegeven maakt de webpagina
+                                    een nieuwe code gebaseerd op de locale tijd.
                                 </p>
                             </div>
                         </div>
@@ -343,7 +347,7 @@
 
     <!-- Other JS goes here -->
     <script>
-        $(".email").text("[EMAIL VOLGT NOG]");
+        $(".email").text(emailAddress);
     </script>
 </body>
 
