@@ -5,14 +5,22 @@ function getRandomExercise(seed) {
     if (seed == undefined) {
         seed = Date.now();
     }
-    fetchExercise(number, seed);
+    fetchExercise("Random", number, seed);
 }
 
-async function fetchExercise(number, seed) {
+function getTypeExercise(type, seed){
+    var number = 10;
+    if (seed == undefined) {
+        seed = Date.now();
+    }
+    fetchExercise(type, number, seed);
+}
+
+async function fetchExercise(type, number, seed) {
     //Start loading circle
     $(".loaderDiv").toggle();
 
-    var response = await fetch(url + "generateRandomExercise/" + number + "/" + seed);
+    var response = await fetch(url + "anyCompoundExercise/" + type + "/" + number + "/" + seed);
     var exercise = await response.json();
 
     //Remove loading circle

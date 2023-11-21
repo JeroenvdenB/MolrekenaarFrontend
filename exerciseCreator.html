@@ -17,7 +17,56 @@
     </script>
 
     <!-- Rest of body goes here -->
-    <h1>Deze pagina bestaat nog niet!</h1>
+    <div class="container">
+        <div class="row my-2 py-2" style="border-bottom: 1px solid black">
+            <div class="col-12">
+                <h1>Opgave Kiezen</h1>
+                <p>Let op, deze pagina is nog niet af. Nog niet alle soorten vragen zijn beschikbaar om te kiezen.</p>
+                <p>Kies welk soort vraag je wilt oefenen. Je kunt maar één vraag tegelijk kiezen.</p>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="col-12 d-grid">
+                    <select class="form-select" id="exerciseType" onchange="selectorImg()">
+                        <option selected value="placeholder"> Selecteer een vraagtype</option>
+                        <option value="MassMol">Massa naar mol</option>
+                        <option value="MolMass">Mol naar massa</option>
+                        <option value="MolParticles">Mol naar aantal deeltjes</option>
+                        <option value="MassParticles">Massa naar aantal deeltjes</option>
+                    </select>
+                    <button class="btn btn-secondary btn-block my-2" onclick="getTypeExercise($('#exerciseType').val())">Nieuwe vragen</button>
+                    <label for="seedInput" class="form-label">Paginacode</label>
+                    <input type="text" class="form-control" id="seedInput">
+                    <button disabled class="btn btn-secondary btn-block my-2" onclick="getTypeExercise($('#exerciseType').val(), $('#seedInput').val())">Code gebruiken</button>
+                </div>
+            </div>
+            <div class="col-md-8 col-12">
+                <img id="schemaImg" src="./Images/placeholder.jpg" width="100%">
+            </div>
+        </div>
+
+        <div class="row loaderDiv" style="justify-content: center; display: none">
+            <div class="loaderCircle my-3"></div>
+            <div class="loadingText"><p style="text-align: center">Verbinding maken met server</p></div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 py-4">
+                <div id="exercisePlaceholder">Kies een opgave</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <a class="btn btn-success" data-bs-toggle="collapse" href="#collapsedAnswers" role="button">Uitwerkingen</a>
+                <div class="collapse" id="collapsedAnswers">
+                    <div class="card card-body my-2" id="answersPlaceholder"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
     <!-- Footer -->
     <div class="container">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4" style="border-top: 1px solid black">
@@ -28,6 +77,15 @@
     </div>
 
     <!-- Other JS goes here -->
+    <script type="text/javascript" src="./exerciseTools_v2.js"></script>
+    <script>
+        function selectorImg() {
+            var selectedType = $('#exerciseType').val();
+            var newImage = "./Images/" + selectedType + ".jpg";
+            $('#schemaImg').attr("src", newImage);
+        }
+    </script>
+
 </body>
 
 </html>
