@@ -20,7 +20,7 @@ async function fetchExercise(type, number, seed) {
     //Start loading circle
     $(".loaderDiv").toggle();
 
-    var response = await fetch(url + "anyCompoundExercise/" + type + "/" + number + "/" + seed);
+    var response = await fetch(url + "getExercise/" + type + "/" + number + "/" + seed);
     var exercise = await response.json();
 
     //Remove loading circle

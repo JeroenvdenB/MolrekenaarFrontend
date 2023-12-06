@@ -21,8 +21,10 @@
         <div class="row my-2 py-2" style="border-bottom: 1px solid black">
             <div class="col-12">
                 <h1>Opgave Kiezen</h1>
-                <p>Let op, deze pagina is nog niet af. Nog niet alle soorten vragen zijn beschikbaar om te kiezen.</p>
                 <p>Kies welk soort vraag je wilt oefenen. Je kunt maar één vraag tegelijk kiezen.</p>
+                <p>De vragen zijn willekeurig, maar onderaan de vraag verschijnt een code. Deze kun je opnieuw
+                    invullen als je dezelfde vragen terug wilt halen. Let wel op dat je zelf hetzelfde type
+                    vraag moet kiezen.</p>
             </div>
             <div class="col-md-4 col-12">
                 <div class="col-12 d-grid">
@@ -31,16 +33,33 @@
                         <option value="MassMol">Massa naar mol</option>
                         <option value="MolMass">Mol naar massa</option>
                         <option value="MolParticles">Mol naar aantal deeltjes</option>
+                        <option value="ParticlesMol">Aantal deeltjes naar mol</option>
                         <option value="MassParticles">Massa naar aantal deeltjes</option>
+                        <option value="ParticlesMass">Aantal deeltjes naar massa</option>
+                        <option value="MolarityVolume">Molariteit naar volume oplossing</option>
+                        <option value="MolMolarity">Mol naar molariteit</option>
+                        <option value="MolarityMol">Molariteit naar mol</option>
+                        <option value="MolMolarityIons">Mol zout naar molariteit ion</option>
+                        <option value="MolarityIonsMol">Molariteit van ion naar mol zout</option>
+                        <option value="MolarityMass">Molariteit naar massa opgeloste stof</option>
+                        <option value="MassMolarity">Massa opgeloste stof naar molariteit</option>
+                        <option value="MolarityIonsMass">Molariteit van ion naar massa zout</option>
+                        <option value="MassMolarityIons">Massa zout naar molariteit ion</option>
+                        <option value="MolGas">Mol naar volume gas</option>
+                        <option value="GasMol">Volume gas naar mol</option>
+                        <option value="MassVolume">Massa naar volume</option>
+                        <option value="MassGas">Massa naar volume gas</option>
+                        <option value="VolumeMass">Volume naar massa</option>
+                        <option value="GasMass">Volume gas naar massa</option>
                     </select>
                     <button class="btn btn-secondary btn-block my-2" onclick="getTypeExercise($('#exerciseType').val())">Nieuwe vragen</button>
                     <label for="seedInput" class="form-label">Paginacode</label>
                     <input type="text" class="form-control" id="seedInput">
-                    <button disabled class="btn btn-secondary btn-block my-2" onclick="getTypeExercise($('#exerciseType').val(), $('#seedInput').val())">Code gebruiken</button>
+                    <button class="btn btn-secondary btn-block my-2" onclick="getTypeExercise($('#exerciseType').val(), $('#seedInput').val())">Code gebruiken</button>
                 </div>
             </div>
             <div class="col-md-8 col-12">
-                <img id="schemaImg" src="./Images/placeholder.jpg" width="100%">
+                <img id="schemaImg" src="./Images/placeholder.jpg" width="90%">
             </div>
         </div>
 
@@ -77,7 +96,7 @@
     </div>
 
     <!-- Other JS goes here -->
-    <script type="text/javascript" src="./exerciseTools_v2.js"></script>
+    <script type="text/javascript" src="./exerciseTools_v3.js"></script>
     <script>
         function selectorImg() {
             var selectedType = $('#exerciseType').val();
